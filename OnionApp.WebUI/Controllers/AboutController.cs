@@ -3,12 +3,11 @@ using OnionApp.WebUI.Services.AboutServices;
 
 namespace OnionApp.WebUI.Controllers
 {
-    public class AboutController(IAboutService _service) : Controller
+    public class AboutController : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var abouts=await _service.GetAllAsync();
-            return View(abouts.Data);
+            return View();
         }
     }
 }

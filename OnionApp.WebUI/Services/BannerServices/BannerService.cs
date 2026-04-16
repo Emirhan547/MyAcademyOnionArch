@@ -36,7 +36,7 @@ namespace OnionApp.WebUI.Services.BannerServices
 
         public async Task<BaseResult<List<ResultBannerDto>>> GetAllAsync()
         {
-            var response = await _client.GetAsync("abouts");
+            var response = await _client.GetAsync("banners");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultBannerDto>>>();
 
@@ -49,7 +49,7 @@ namespace OnionApp.WebUI.Services.BannerServices
 
         public async Task<BaseResult<UpdateBannerDto>> GetByIdAsync(int id)
         {
-            var response = await _client.GetAsync($"abouts"+id);
+            var response = await _client.GetAsync($"banners" +id);
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<UpdateBannerDto>>();
 

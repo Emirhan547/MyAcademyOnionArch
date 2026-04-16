@@ -55,5 +55,6 @@ namespace OnionApp.API.Controllers
             var values=await _mediator.Send(new GetCarWithBrandQuery());
             return values.IsSuccessful?Ok(values) : BadRequest(values);
         }
+        
     }
 }

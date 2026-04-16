@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnionApp.WebUI.Services.CarServices;
+using OnionApp.WebUI.Services.CarPricingServices;
 
 namespace OnionApp.WebUI.Controllers
 {
-    public class CarController (ICarService _service): Controller
+    public class CarController (ICarPricingService _service): Controller
     {
         public async Task<IActionResult> Index()
         {
-            var cars=await _service.GetCarWithBrands();
+            ViewBag.v1 = "Araçlarımız";
+            ViewBag.v2 = "Araçlarınızı Seçiniz";
+            var cars=await _service.GetCarPricingWithCar();
             return View(cars.Data);
         }
     }
