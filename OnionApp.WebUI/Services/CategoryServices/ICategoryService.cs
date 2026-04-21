@@ -7,9 +7,9 @@ namespace OnionApp.WebUI.Services.CategoryServices
     public interface ICategoryService
     {
         Task<BaseResult<List<ResultCategoryDto>>> GetAllAsync();
-        //Task<BaseResult<UpdateAboutDto>> GetByIdAsync(int id);
-        //Task<BaseResult<object>> CreateAsync(CreateAboutDto create);
-        //Task<BaseResult<object>> UpdateAsync(UpdateAboutDto update);
-        //Task<BaseResult<object>> DeleteAsync(int id);
+        Task<BaseResult<UpdateCategoryDto>> GetByIdAsync(int id);
+        Task<BaseResult<object>> CreateAsync(CreateCategoryDto create);
+        Task<BaseResult<object>> UpdateAsync(UpdateCategoryDto update);
+        Task<BaseResult<object>> DeleteAsync(int id);
     }
 }

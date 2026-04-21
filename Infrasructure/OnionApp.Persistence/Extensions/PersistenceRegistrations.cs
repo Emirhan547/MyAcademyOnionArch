@@ -21,6 +21,11 @@ namespace OnionApp.Persistence.Extensions
             });
 
             services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<ICarPricingRepository, CarPricingRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+            services.AddScoped<ITagCloudRepository, TagCloudRepository>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

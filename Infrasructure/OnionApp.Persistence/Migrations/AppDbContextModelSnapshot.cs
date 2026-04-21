@@ -122,6 +122,10 @@ namespace OnionApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -290,6 +294,35 @@ namespace OnionApp.Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("OnionApp.Domain.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("OnionApp.Domain.Entities.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -452,6 +485,28 @@ namespace OnionApp.Persistence.Migrations
                     b.ToTable("SocialMedias");
                 });
 
+            modelBuilder.Entity("OnionApp.Domain.Entities.TagCloud", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("TagClouds");
+                });
+
             modelBuilder.Entity("OnionApp.Domain.Entities.Blog", b =>
                 {
                     b.HasOne("OnionApp.Domain.Entities.Author", "Author")
@@ -531,9 +586,38 @@ namespace OnionApp.Persistence.Migrations
                     b.Navigation("Pricing");
                 });
 
+            modelBuilder.Entity("OnionApp.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("OnionApp.Domain.Entities.Blog", "Blog")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("OnionApp.Domain.Entities.TagCloud", b =>
+                {
+                    b.HasOne("OnionApp.Domain.Entities.Blog", "Blog")
+                        .WithMany("TagClouds")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
             modelBuilder.Entity("OnionApp.Domain.Entities.Author", b =>
                 {
                     b.Navigation("Blogs");
+                });
+
+            modelBuilder.Entity("OnionApp.Domain.Entities.Blog", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("TagClouds");
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Brand", b =>

@@ -12,7 +12,30 @@ namespace OnionApp.WebUI.Services.CategoryServices
         {
             _client = factory.CreateClient("ApiClient");
         }
-        
+
+        public async Task<BaseResult<object>> CreateAsync(CreateCategoryDto create)
+        {
+            var response = await _client.PostAsJsonAsync("categories", create);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<object>> DeleteAsync(int id)
+        {
+            var response = await _client.DeleteAsync($"categories/{id}");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
 
         public async Task<BaseResult<List<ResultCategoryDto>>> GetAllAsync()
         {
@@ -26,6 +49,28 @@ namespace OnionApp.WebUI.Services.CategoryServices
             };
         }
 
-        
+        public async Task<BaseResult<UpdateCategoryDto>> GetByIdAsync(int id)
+        {
+            var response = await _client.GetAsync($"categories/{id}");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<UpdateCategoryDto>>();
+
+            return result ?? new BaseResult<UpdateCategoryDto>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<object>> UpdateAsync(UpdateCategoryDto update)
+        {
+            var response = await _client.PutAsJsonAsync("categories", update);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
     }
 }

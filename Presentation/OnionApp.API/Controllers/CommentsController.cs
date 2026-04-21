@@ -42,5 +42,11 @@ namespace OnionApp.API.Controllers
             return comment.IsSuccessful ? Ok(comment) : BadRequest(comment);
 
         }
+        [HttpGet("GetCommentWithBlog/{id}")]
+        public async Task<IActionResult> GetCommentWithBlog(int id)
+        {
+            var comment=await _mediator.Send(new GetCommentWithBlogQuery(id));
+            return comment.IsSuccessful ? Ok(comment) : BadRequest(comment);
+        }
     }
 }

@@ -5,6 +5,7 @@ using OnionApp.Application.Features.Commands.BrandCommands;
 using OnionApp.Application.Features.Commands.CarCommands;
 using OnionApp.Application.Features.Queries.BrandQueries;
 using OnionApp.Application.Features.Queries.CarQueries;
+using OnionApp.Application.Features.Queries.StatisticsQueries;
 using OnionApp.Domain.Entities;
 
 namespace OnionApp.API.Controllers
@@ -56,5 +57,7 @@ namespace OnionApp.API.Controllers
             return values.IsSuccessful?Ok(values) : BadRequest(values);
         }
         
+
+
     }
 }

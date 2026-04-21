@@ -59,6 +59,18 @@ namespace OnionApp.WebUI.Services.CommentServices
             };
         }
 
+        public async Task<BaseResult<List<ResultGetCommentWithBlogDto>>> GetCommentsByBlogId(int id)
+        {
+            var response = await _client.GetAsync($"GetCommentWithBlog" + id);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultGetCommentWithBlogDto>>>();
+
+            return result ?? new BaseResult<List<ResultGetCommentWithBlogDto>>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
         public async Task<BaseResult<object>> UpdateAsync(UpdateCommentDto update)
         {
             var response = await _client.PutAsJsonAsync("comments", update);

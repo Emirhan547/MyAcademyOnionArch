@@ -36,5 +36,64 @@ namespace OnionApp.WebUI.Services.CarServices
                 Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
             };
         }
+        public async Task<BaseResult<List<ResultCarDto>>> GetAllAsync()
+        {
+            var response = await _client.GetAsync("cars");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultCarDto>>>();
+
+            return result ?? new BaseResult<List<ResultCarDto>>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<UpdateCarDto>> GetByIdAsync(int id)
+        {
+            var response = await _client.GetAsync($"cars/{id}");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<UpdateCarDto>>();
+
+            return result ?? new BaseResult<UpdateCarDto>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<object>> CreateAsync(CreateCarDto create)
+        {
+            var response = await _client.PostAsJsonAsync("cars", create);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<object>> UpdateAsync(UpdateCarDto update)
+        {
+            var response = await _client.PutAsJsonAsync("cars", update);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<object>> DeleteAsync(int id)
+        {
+            var response = await _client.DeleteAsync($"cars/{id}");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
     }
 }

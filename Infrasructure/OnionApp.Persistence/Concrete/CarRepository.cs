@@ -12,6 +12,11 @@ namespace OnionApp.Persistence.Concrete
 {
     public class CarRepository (AppDbContext _context): ICarRepository
     {
+        public int GetCarCount()
+        {
+           return _context.Cars.Count();
+        }
+
         public async Task<List<Car>> GetCarsListWithBrands()
         {
             var values=await _context.Cars.Include(x => x.Brand).ToListAsync();
