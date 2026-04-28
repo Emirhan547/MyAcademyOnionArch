@@ -5,7 +5,7 @@ namespace OnionApp.WebUI.ViewComponents.CarDetailViewComponents
 {
     public class _CarDetailCommentsByCarIdComponentPartial(IReviewService _service):ViewComponent 
     {
-        public async Task<IViewComponentResult> Invoke(int id)
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var result = await _service.GetReviewsByCarId(id);
             return View(result.Data);

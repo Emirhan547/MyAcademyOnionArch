@@ -1,137 +1,184 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnionApp.Application.Contracts;
 using OnionApp.Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnionApp.Persistence.Concrete
 {
-    public class StatisticsRepository (AppDbContext _context): IStatisticsRepository
+    public class StatisticsRepository(AppDbContext _context) : IStatisticsRepository
     {
-        public string GetBlogTitleByMaxBlogComment()
+        public async Task<int> GetCarCount()
         {
-            //Select Top(1) BlogId,Count(*) as 'Sayi' From Comments Group By BlogID Order By Sayi Desc 
-            var values = _context.Comments.GroupBy(x => x.BlogId).
-                              Select(y => new
-                              {
-                                  BlogId = y.Key,
-                                  Count = y.Count()
-                              }).OrderByDescending(z => z.Count).Take(1).FirstOrDefault();
-            string blogName = _context.Blogs.Where(x => x.Id == values.BlogId).Select(y => y.Title).FirstOrDefault();
-            return blogName;
+            return await _context.Cars.CountAsync();
         }
 
-        public string GetBrandNameByMaxCar()
+        public async Task<int> GetLocationCount()
         {
-            //Select Top(1) BrandId,Count(*) as 'ToplamArac' From Cars Group By Brands.Name  order By ToplamArac Desc
-
-            var values = _context.Cars.GroupBy(x => x.BrandId).
-                             Select(y => new
-                             {
-                                 BrandId = y.Key,
-                                 Count = y.Count()
-                             }).OrderByDescending(z => z.Count).Take(1).FirstOrDefault();
-            string brandName = _context.Brands.Where(x => x.Id == values.BrandId).Select(y => y.Name).FirstOrDefault();
-            return brandName;
+            return await _context.Locations.CountAsync();
         }
 
-        public int GetAuthorCount()
+        public async Task<int> GetAuthorCount()
         {
-            var value = _context.Authors.Count();
-            return value;
+            return await _context.Authors.CountAsync();
         }
 
-        public decimal GetAvgRentPriceForDaily()
+        public async Task<int> GetBlogCount()
         {
-            //Select Avg(Amount) from CarPricings where PricingID=(Select PricingID From Pricings Where Name='Günlük')
-            int id = _context.Pricings.Where(y => y.Name == "Günlük").Select(z => z.Id).FirstOrDefault();
-            var value = _context.CarPricings.Where(w => w.PricingId == id).Average(x => x.Amount);
-            return value;
+            return await _context.Blogs.CountAsync();
         }
 
-        public decimal GetAvgRentPriceForMonthly()
+        public async Task<int> GetBrandCount()
         {
-            int id = _context.Pricings.Where(y => y.Name == "Aylık").Select(z => z.Id).FirstOrDefault();
-            var value = _context.CarPricings.Where(w => w.PricingId == id).Average(x => x.Amount);
-            return value;
+            return await _context.Brands.CountAsync();
         }
 
-        public decimal GetAvgRentPriceForWeekly()
+        public async Task<decimal> GetAvgRentPriceForDaily()
         {
-            int id = _context.Pricings.Where(y => y.Name == "Haftalık").Select(z => z.Id).FirstOrDefault();
-            var value = _context.CarPricings.Where(w => w.PricingId == id).Average(x => x.Amount);
-            return value;
+            int id = await _context.Pricings
+                .Where(x => x.Name == "Günlük")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            return await _context.CarPricings
+                .Where(x => x.PricingId == id)
+                .AverageAsync(x => x.Amount);
         }
 
-        public int GetBlogCount()
+        public async Task<decimal> GetAvgRentPriceForWeekly()
         {
-            var value = _context.Blogs.Count();
-            return value;
+            int id = await _context.Pricings
+                .Where(x => x.Name == "Haftalık")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            return await _context.CarPricings
+                .Where(x => x.PricingId == id)
+                .AverageAsync(x => x.Amount);
         }
 
-        public int GetBrandCount()
+        public async Task<decimal> GetAvgRentPriceForMonthly()
         {
-            var value = _context.Brands.Count();
-            return value;
+            int id = await _context.Pricings
+                .Where(x => x.Name == "Aylık")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            return await _context.CarPricings
+                .Where(x => x.PricingId == id)
+                .AverageAsync(x => x.Amount);
         }
 
-        public string GetCarBrandAndModelByRentPriceDailyMax()
+        public async Task<int> GetCarCountByTranmissionIsAuto()
         {
-            //Select * From CarPricings where Amount=(Select Max(Amount) From CarPricings where PricingID=3)
-            int pricingID = _context.Pricings.Where(x => x.Name == "Günlük").Select(y => y.Id).FirstOrDefault();
-            decimal amount = _context.CarPricings.Where(y => y.PricingId == pricingID).Max(x => x.Amount);
-            int carId = _context.CarPricings.Where(x => x.Amount == amount).Select(y => y.CarId).FirstOrDefault();
-            string brandModel = _context.Cars.Where(x => x.Id == carId).Include(y => y.Brand).Select(z => z.Brand.Name + " " + z.Model).FirstOrDefault();
-            return brandModel;
+            return await _context.Cars
+                .Where(x => x.Transmission == "Otomatik")
+                .CountAsync();
         }
 
-        public string GetCarBrandAndModelByRentPriceDailyMin()
+        public async Task<string> GetBrandNameByMaxCar()
         {
-            int pricingID = _context.Pricings.Where(x => x.Name == "Günlük").Select(y => y.Id).FirstOrDefault();
-            decimal amount = _context.CarPricings.Where(y => y.PricingId == pricingID).Min(x => x.Amount);
-            int carId = _context.CarPricings.Where(x => x.Amount == amount).Select(y => y.CarId).FirstOrDefault();
-            string brandModel = _context.Cars.Where(x => x.Id == carId).Include(y => y.Brand).Select(z => z.Brand.Name + " " + z.Model).FirstOrDefault();
-            return brandModel;
+            var value = await _context.Cars
+                .GroupBy(x => x.BrandId)
+                .Select(g => new
+                {
+                    BrandId = g.Key,
+                    Count = g.Count()
+                })
+                .OrderByDescending(x => x.Count)
+                .FirstOrDefaultAsync();
+
+            if (value == null) return string.Empty;
+
+            return await _context.Brands
+                .Where(x => x.Id == value.BrandId)
+                .Select(x => x.Name)
+                .FirstOrDefaultAsync();
         }
 
-        public int GetCarCount()
+        public async Task<string> GetBlogTitleByMaxBlogComment()
         {
-            var value = _context.Cars.Count();
-            return value;
+            var value = await _context.Comments
+                .GroupBy(x => x.BlogId)
+                .Select(g => new
+                {
+                    BlogId = g.Key,
+                    Count = g.Count()
+                })
+                .OrderByDescending(x => x.Count)
+                .FirstOrDefaultAsync();
+
+            if (value == null) return string.Empty;
+
+            return await _context.Blogs
+                .Where(x => x.Id == value.BlogId)
+                .Select(x => x.Title)
+                .FirstOrDefaultAsync();
         }
 
-        public int GetCarCountByFuelElectric()
+        public async Task<int> GetCarCountByKmSmallerThen1000()
         {
-            var value = _context.Cars.Where(x => x.Fuel == "Elektrik").Count();
-            return value;
+            return await _context.Cars
+                .Where(x => x.Km <= 1000)
+                .CountAsync();
         }
 
-        public int GetCarCountByFuelGasolineOrDiesel()
+        public async Task<int> GetCarCountByFuelGasolineOrDiesel()
         {
-            var value = _context.Cars.Where(x => x.Fuel == "Benzin" || x.Fuel == "Dizel").Count();
-            return value;
+            return await _context.Cars
+                .Where(x => x.Fuel == "Benzin" || x.Fuel == "Dizel")
+                .CountAsync();
         }
 
-        public int GetCarCountByKmSmallerThen1000()
+        public async Task<int> GetCarCountByFuelElectric()
         {
-            var value = _context.Cars.Where(x => x.Km <= 1000).Count();
-            return value;
+            return await _context.Cars
+                .Where(x => x.Fuel == "Elektrik")
+                .CountAsync();
         }
 
-        public int GetCarCountByTranmissionIsAuto()
+        public async Task<string> GetCarBrandAndModelByRentPriceDailyMax()
         {
-            var value = _context.Cars.Where(x => x.Transmission == "Otomatik").Count();
-            return value;
+            int pricingId = await _context.Pricings
+                .Where(x => x.Name == "Günlük")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            decimal maxAmount = await _context.CarPricings
+                .Where(x => x.PricingId == pricingId)
+                .MaxAsync(x => x.Amount);
+
+            int carId = await _context.CarPricings
+                .Where(x => x.Amount == maxAmount)
+                .Select(x => x.CarId)
+                .FirstOrDefaultAsync();
+
+            return await _context.Cars
+                .Where(x => x.Id == carId)
+                .Include(x => x.Brand)
+                .Select(x => x.Brand.Name + " " + x.Model)
+                .FirstOrDefaultAsync();
         }
 
-        public int GetLocationCount()
+        public async Task<string> GetCarBrandAndModelByRentPriceDailyMin()
         {
-            var value = _context.Locations.Count();
-            return value;
-        }
+            int pricingId = await _context.Pricings
+                .Where(x => x.Name == "Günlük")
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
 
+            decimal minAmount = await _context.CarPricings
+                .Where(x => x.PricingId == pricingId)
+                .MinAsync(x => x.Amount);
+
+            int carId = await _context.CarPricings
+                .Where(x => x.Amount == minAmount)
+                .Select(x => x.CarId)
+                .FirstOrDefaultAsync();
+
+            return await _context.Cars
+                .Where(x => x.Id == carId)
+                .Include(x => x.Brand)
+                .Select(x => x.Brand.Name + " " + x.Model)
+                .FirstOrDefaultAsync();
+        }
     }
 }

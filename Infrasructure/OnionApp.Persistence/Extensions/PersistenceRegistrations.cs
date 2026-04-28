@@ -20,12 +20,18 @@ namespace OnionApp.Persistence.Extensions
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<ICarDescriptionRepository, CarDescriptionRepository>();
+            services.AddScoped<ICarFeatureRepository, CarFeatureRepository>();
             services.AddScoped<ICarPricingRepository, CarPricingRepository>();
+            services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IRentACarRepository, RentACarRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IStatisticsRepository, StatisticsRepository>();
             services.AddScoped<ITagCloudRepository, TagCloudRepository>();
+            
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

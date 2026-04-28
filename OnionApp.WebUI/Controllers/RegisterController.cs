@@ -25,7 +25,7 @@ namespace OnionApp.WebUI.Controllers
             var jsonData = JsonConvert.SerializeObject(createRegisterDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var responseMessage = await _client.PostAsync("https://localhost:7188/api/Registers", stringContent);
+            var responseMessage = await _client.PostAsync("https://localhost:7069/api/Registers", stringContent);
 
             if (responseMessage.IsSuccessStatusCode)
             {

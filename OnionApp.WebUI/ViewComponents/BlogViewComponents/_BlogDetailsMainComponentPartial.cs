@@ -5,7 +5,7 @@ namespace OnionApp.WebUI.ViewComponents.BlogViewComponents
 {
     public class _BlogDetailsMainComponentPartial(IBlogService _service):ViewComponent
     {
-        public async Task<IViewComponentResult> Invoke(int id)
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var result = await _service.GetByIdAsync(id);
             return View(result.Data);

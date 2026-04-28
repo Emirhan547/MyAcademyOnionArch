@@ -32,7 +32,7 @@ namespace OnionApp.WebUI.Controllers
         {
             var content = new StringContent(JsonSerializer.Serialize(create), Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("https://localhost:7060/api/Login", content);
+            var response = await _client.PostAsync("https://localhost:7069/api/Login", content);
 
             if (response.IsSuccessStatusCode)
             {
