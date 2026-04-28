@@ -10,5 +10,6 @@ namespace OnionApp.Application.Contracts
     public interface ICarPricingRepository
     {
         Task<List<CarPricing>> GetCarPricingWithCar();
+        List<CarPricing> GetCarPricingWithTimePeriod();
     }
 }

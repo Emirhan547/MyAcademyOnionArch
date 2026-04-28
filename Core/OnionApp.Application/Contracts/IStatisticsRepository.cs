@@ -8,7 +8,7 @@ namespace OnionApp.Application.Contracts
 {
     public interface IStatisticsRepository
     {
-         int GetCarCount();
+        int GetCarCount();
         int GetLocationCount();
         int GetAuthorCount();
         int GetBlogCount();

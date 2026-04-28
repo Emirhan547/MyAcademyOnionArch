@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,15 @@ namespace OnionApp.Domain.Entities
         public int CarId { get; set; }
         public virtual Car Car { get; set; }
         public int PricingId { get; set; }
-        public virtual Pricing Pricing { get; set; }
+        public Pricing Pricing { get; set; }
         public decimal Amount { get; set; }
+        [NotMapped]
+        public decimal DailyAmount { get; set; }
+
+        [NotMapped]
+        public decimal WeeklyAmount { get; set; }
+
+        [NotMapped]
+        public decimal MonthlyAmount { get; set; }
     }
 }

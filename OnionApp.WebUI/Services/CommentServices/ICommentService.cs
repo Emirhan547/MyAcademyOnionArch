@@ -11,5 +11,6 @@ namespace OnionApp.WebUI.Services.CommentServices
         Task<BaseResult<object>> UpdateAsync(UpdateCommentDto update);
         Task<BaseResult<object>> DeleteAsync(int id);
         Task<BaseResult<List<ResultGetCommentWithBlogDto>>> GetCommentsByBlogId(int id);
+        Task<BaseResult<ResultCommentCountDto>> GetCountCommentByBlogAsync(int id);
     }
 }

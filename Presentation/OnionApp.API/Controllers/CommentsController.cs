@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnionApp.Application.Features.Commands.CommentCommands;
 using OnionApp.Application.Features.Queries.CommentQueries;
+using OnionApp.Domain.Entities;
 
 namespace OnionApp.API.Controllers
 {
@@ -47,6 +48,12 @@ namespace OnionApp.API.Controllers
         {
             var comment=await _mediator.Send(new GetCommentWithBlogQuery(id));
             return comment.IsSuccessful ? Ok(comment) : BadRequest(comment);
+        }
+        [HttpGet("GetCommentCount")]
+        public async Task<IActionResult> GetCommentCount(int id)
+        {
+            var comments = await _mediator.Send(new GetCommentCountQuery(id));
+            return comments.IsSuccessful ? Ok(comments) : BadRequest(comments);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿ğç.7879-@{
+﻿@using OnionApp.WebUI.Dtos.LocationDtos
+@model  ResultLocationDto
+@{
     ViewData["Title"] = "Index";
     Layout = null;
 }
@@ -21,7 +23,7 @@
 
     @await Component.InvokeAsync("_DefaultCoverUILayoutComponentPartial")
 
-   @*  <section class="ftco-section ftco-no-pt bg-light">
+    <section class="ftco-section ftco-no-pt bg-light">
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-md-12	featured-top">
@@ -31,7 +33,7 @@
                                 <h2>Şimdi Aracınızı Kiralayın</h2>
                                 <div class="form-group">
                                     <label for="" class="label">Alınacak Lokasyon</label>
-                                    @Html.DropDownListFor(x => x.LocationID, (List<SelectListItem>)ViewBag.v, new { @class = "form-control", @id = "drop" })
+                                    @Html.DropDownListFor(x => x.Id, (List<SelectListItem>)ViewBag.v, new { @class = "form-control", @id = "drop" })
                                 </div>
 
                                 <div class="d-flex">
@@ -92,7 +94,8 @@
                     </div>
                 </div>
             </div>
-        </section> *@
+        </div>
+        </section>
 
         @await Component.InvokeAsync("_DefaultLast5CarsWithBrandsComponentPartial")
 

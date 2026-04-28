@@ -12,5 +12,12 @@ namespace OnionApp.WebUI.Controllers
             var cars=await _service.GetCarPricingWithCar();
             return View(cars.Data);
         }
+        public IActionResult CarDetail(int id)
+        {
+            ViewBag.v1 = "Araç Detayları";
+            ViewBag.v2 = "Aracın Teknik Aksesuar ve Özellikleri";
+            ViewBag.carid=id;
+            return View();
+        }
     }
 }

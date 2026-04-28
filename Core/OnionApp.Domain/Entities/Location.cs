@@ -10,5 +10,8 @@ namespace OnionApp.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public IList<RentACar> RentACars { get; set; }
+        public IList<Reservation> PickUpReservation { get; set; }
+        public IList<Reservation> DropOffReservation { get; set; }
     }
 }

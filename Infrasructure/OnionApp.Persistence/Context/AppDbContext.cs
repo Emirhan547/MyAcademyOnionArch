@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnionApp.Domain.Entities;
+using OnionApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace OnionApp.Persistence.Context
     public class AppDbContext(DbContextOptions options):DbContext(options)
     {
         public DbSet<Category>Categories { get; set; }
+        public DbSet<AppUser>AppUsers { get; set; }
+        public DbSet<AppRole>AppRoles { get; set; }
         public DbSet<About>Abouts { get; set; }
         public DbSet<Banner>Banners { get; set; }
         public DbSet<Brand>Brands { get; set; }
@@ -29,6 +32,41 @@ namespace OnionApp.Persistence.Context
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<TagCloud> TagClouds { get; set; }
         public DbSet<Comment> Comments { get; set; }
-       
+        public DbSet<RentACar> RentACars { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Reservation>()
+                .HasOne(x => x.PickUpLocation)
+                .WithMany(y => y.PickUpReservation)
+                .HasForeignKey(z => z.PickUpLocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(x => x.DropOffLocation)
+                .WithMany(y => y.DropOffReservation)
+                .HasForeignKey(z => z.DropOffLocationId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Pricing>().HasData(
+       new Pricing
+       {
+           Id = (int)PricingType.Daily,
+           Name = "Daily"
+       },
+       new Pricing
+       {
+           Id = (int)PricingType.Weekly,
+           Name = "Weekly"
+       },
+       new Pricing
+       {
+           Id = (int)PricingType.Monthly,
+           Name = "Monthly"
+       }
+   );
+        }
+
     }
 }
