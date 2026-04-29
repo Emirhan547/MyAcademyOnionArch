@@ -12,8 +12,8 @@ using OnionApp.Persistence.Context;
 namespace OnionApp.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260428214036_mig5")]
-    partial class mig5
+    [Migration("20260429104710_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,15 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Abouts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Türkiye genelinde hızlı ve güvenli araç kiralama hizmeti sunuyoruz.",
+                            ImageUrl = "/images/about.jpg",
+                            Title = "Hakkımızda"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.AppRole", b =>
@@ -65,6 +74,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("AppRoleId");
 
                     b.ToTable("AppRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            AppRoleId = 1,
+                            AppRoleName = "Admin"
+                        },
+                        new
+                        {
+                            AppRoleId = 2,
+                            AppRoleName = "Member"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.AppUser", b =>
@@ -103,6 +124,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("AppRoleId");
 
                     b.ToTable("AppUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppRoleId = 1,
+                            Email = "admin@onionapp.local",
+                            Name = "System",
+                            Password = "Admin123!",
+                            Surname = "Admin",
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Author", b =>
@@ -128,6 +161,15 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Araç kiralama ve seyahat rehberleri hazırlayan editör.",
+                            ImageUrl = "/images/team-1.jpg",
+                            Name = "OnionApp Editör"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Banner", b =>
@@ -157,6 +199,16 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Banners");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Dakikalar içinde rezervasyon yapın.",
+                            Title = "Hayalinizdeki Aracı Kiralayın",
+                            VideoDescription = "Tanıtım videosunu izleyin",
+                            VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Blog", b =>
@@ -195,6 +247,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Blogs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 1,
+                            CategoryId = 2,
+                            CoverImageUrl = "/images/blog-1.jpg",
+                            CreatedDate = new DateTime(2026, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Hafta sonu kısa kaçamaklar için önerilen rotalar.",
+                            Title = "İstanbul'da Hafta Sonu Sürüş Rotası"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Brand", b =>
@@ -212,6 +276,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "BMW"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mercedes"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Car", b =>
@@ -259,6 +335,34 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("BrandId");
 
                     b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BigImageUrl = "/images/car-1-big.jpg",
+                            BrandId = 1,
+                            CoverImageUrl = "/images/car-1.jpg",
+                            Fuel = "Gasoline",
+                            Km = 42000,
+                            Luggage = (byte)3,
+                            Model = "320i",
+                            Seat = (byte)5,
+                            Transmission = "Automatic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BigImageUrl = "/images/car-2-big.jpg",
+                            BrandId = 2,
+                            CoverImageUrl = "/images/car-2.jpg",
+                            Fuel = "Diesel",
+                            Km = 36000,
+                            Luggage = (byte)4,
+                            Model = "C200",
+                            Seat = (byte)5,
+                            Transmission = "Automatic"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.CarDescription", b =>
@@ -281,6 +385,20 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("CarDescriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CarId = 1,
+                            Details = "Şehir içi kullanım için konforlu ve ekonomik sedan model."
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CarId = 2,
+                            Details = "Uzun yolculuklara uygun premium sürüş deneyimi sunar."
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.CarFeature", b =>
@@ -307,6 +425,29 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("FeatureId");
 
                     b.ToTable("CarFeatures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Available = true,
+                            CarId = 1,
+                            FeatureId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Available = true,
+                            CarId = 1,
+                            FeatureId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Available = true,
+                            CarId = 2,
+                            FeatureId = 1
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.CarPricing", b =>
@@ -333,6 +474,36 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("PricingId");
 
                     b.ToTable("CarPricings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 2500m,
+                            CarId = 1,
+                            PricingId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 15000m,
+                            CarId = 1,
+                            PricingId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 55000m,
+                            CarId = 1,
+                            PricingId = 4
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 3200m,
+                            CarId = 2,
+                            PricingId = 2
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Category", b =>
@@ -350,6 +521,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Araç İnceleme"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Seyahat Önerileri"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Comment", b =>
@@ -383,6 +566,17 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("BlogId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BlogId = 1,
+                            CreatedDate = new DateTime(2026, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Harika öneriler, teşekkürler.",
+                            Email = "ziyaretci@example.com",
+                            Name = "Ziyaretçi"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Contact", b =>
@@ -415,6 +609,17 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contacts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "demo@example.com",
+                            Message = "Kurumsal kiralama hakkında bilgi almak istiyorum.",
+                            Name = "Demo Kullanıcı",
+                            SendDate = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Subject = "Bilgi"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Customer", b =>
@@ -457,6 +662,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Features");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Klima"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bluetooth"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.FooterAddress", b =>
@@ -486,6 +703,16 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FooterAddresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Maslak, İstanbul",
+                            Description = "Bize her zaman ulaşabilirsiniz.",
+                            Email = "info@onionapp.local",
+                            Phone = "+90 212 000 00 00"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Location", b =>
@@ -503,6 +730,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "İstanbul Havalimanı"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Ankara Merkez"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Pricing", b =>
@@ -563,6 +802,22 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("RentACars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Available = true,
+                            CarId = 1,
+                            LocationId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Available = true,
+                            CarId = 2,
+                            LocationId = 2
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.RentACarProcess", b =>
@@ -672,6 +927,23 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("PickUpLocationId");
 
                     b.ToTable("Reservations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 30,
+                            CarId = 1,
+                            Description = "Bebek koltuğu talebi",
+                            DriverLicenseYear = 8,
+                            DropOffLocationId = 2,
+                            Email = "ahmet@example.com",
+                            Name = "Ahmet",
+                            Phone = "05550000000",
+                            PickUpLocationId = 1,
+                            Status = "Onay Bekliyor",
+                            Surname = "Yılmaz"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Review", b =>
@@ -709,6 +981,18 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CarId = 1,
+                            Comment = "Araç temiz ve teslimat hızlıydı.",
+                            CustomerImage = "/images/person_1.jpg",
+                            CustomerName = "Elif K.",
+                            RaytingValue = "5",
+                            ReviewDate = new DateTime(2026, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.Service", b =>
@@ -734,6 +1018,22 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Yolculuk boyunca destek ekibimiz yanınızda.",
+                            IconUrl = "flaticon-support",
+                            Title = "7/24 Destek"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Tüm kiralamalarda geniş kapsamlı güvence.",
+                            IconUrl = "flaticon-insurance",
+                            Title = "Tam Sigorta"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.SocialMedia", b =>
@@ -759,6 +1059,22 @@ namespace OnionApp.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SocialMedias");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Icon = "fab fa-instagram",
+                            Name = "Instagram",
+                            Url = "https://instagram.com/onionapp"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Icon = "fab fa-linkedin",
+                            Name = "LinkedIn",
+                            Url = "https://linkedin.com/company/onionapp"
+                        });
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.TagCloud", b =>
@@ -781,6 +1097,49 @@ namespace OnionApp.Persistence.Migrations
                     b.HasIndex("BlogId");
 
                     b.ToTable("TagClouds");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BlogId = 1,
+                            Title = "istanbul"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BlogId = 1,
+                            Title = "hafta sonu"
+                        });
+                });
+
+            modelBuilder.Entity("OnionApp.Domain.Entities.Testimonial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Testimonials");
                 });
 
             modelBuilder.Entity("OnionApp.Domain.Entities.AppUser", b =>

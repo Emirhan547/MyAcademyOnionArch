@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.AuthorServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AuthorController(IAuthorService _service) : Controller
     {
         public async Task<IActionResult> Index()

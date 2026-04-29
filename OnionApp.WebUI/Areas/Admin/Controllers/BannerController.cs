@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.BannerServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class BannerController (IBannerService _service): Controller
     {
         public async Task<IActionResult> Index()

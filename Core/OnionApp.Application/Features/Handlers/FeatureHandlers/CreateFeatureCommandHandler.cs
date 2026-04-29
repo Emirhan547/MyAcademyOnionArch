@@ -25,7 +25,7 @@ namespace OnionApp.Application.Features.Handlers.FeatureHandlers
             var mapped = request.Adapt<Feature>();
             await _repository.CreateAsync(mapped);
            var uow= await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Feature Eklenemedi"):BaseResult<object>.Success(uow);
+            return uow?BaseResult<object>.Success(uow):BaseResult<object>.Fail("Feature Eklenemedi");
         }
     }
 }

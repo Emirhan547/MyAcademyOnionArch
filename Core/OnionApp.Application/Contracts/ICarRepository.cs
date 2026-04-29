@@ -11,6 +11,7 @@ namespace OnionApp.Application.Contracts
     {
         Task<List<Car>> GetCarsListWithBrands();
         Task<List<Car>>GetLast5CarsWithBrands();
+        Task<Car> GetCarWithBrandByIdAsync(int id);
         int GetCarCount();
     }
 }

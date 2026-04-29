@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnionApp.Application.Features.Commands.LocationCommands;
@@ -6,6 +7,8 @@ using OnionApp.Application.Features.Queries.LocationQueries;
 
 namespace OnionApp.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     [Route("api/[controller]")]
     [ApiController]
     public class LocationsController(IMediator _mediator) : ControllerBase

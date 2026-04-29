@@ -2,7 +2,7 @@
 
 namespace OnionApp.WebUI.ViewComponents.DefaultViewComponents
 {
-    public class DefaultStatisticsComponentPartial:ViewComponent
+    public class _DefaultStatisticsComponentPartial:ViewComponent
     {
         public IViewComponentResult Invoke()
         {

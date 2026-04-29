@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.SocialMediaServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SocialMediaController(ISocialMediaService _service) : Controller
     {
         public async Task<IActionResult> Index()

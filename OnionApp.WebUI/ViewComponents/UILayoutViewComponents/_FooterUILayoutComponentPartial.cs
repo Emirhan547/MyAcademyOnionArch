@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OnionApp.WebUI.Base;
 using OnionApp.WebUI.Dtos.FooterAddressDtos;
 
 namespace UdemyCarBook.WebUI.ViewComponents.UILayoutViewComponents
@@ -15,13 +16,17 @@ namespace UdemyCarBook.WebUI.ViewComponents.UILayoutViewComponents
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:7069/api/FooterAddresses");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultFooterAddressDto>>(jsonData);
-                return View(values);
-            }
-            return View();
+
+            if (!responseMessage.IsSuccessStatusCode)
+                return View(new List<ResultFooterAddressDto>());
+
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<BaseResult<List<ResultFooterAddressDto>>>(jsonData);
+
+            var data = result?.Data ?? new List<ResultFooterAddressDto>();
+
+            return View(data);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace OnionApp.WebUI.Services.CarServices
 
         public async Task<BaseResult<List<ResultCarWithBrandsDto>>> GetCarWithBrands()
         {
-            var response = await _client.GetAsync("GetCarWithBrand");
+            var response = await _client.GetAsync("cars/GetCarWithBrand");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultCarWithBrandsDto>>>();
 
@@ -25,9 +25,9 @@ namespace OnionApp.WebUI.Services.CarServices
             };
         }
 
-        public async Task<BaseResult<List<ResultLast5CarsWithBrandsDto>>> GetLas5CarWithBrands()
+        public async Task<BaseResult<List<ResultLast5CarsWithBrandsDto>>> GetLast5CarWithBrands()
         {
-            var response = await _client.GetAsync("GetLast5CarsWithBrand");
+            var response = await _client.GetAsync("cars/GetLast5CarsWithBrand");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultLast5CarsWithBrandsDto>>>();
 
@@ -91,6 +91,18 @@ namespace OnionApp.WebUI.Services.CarServices
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
             return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
+
+        public async Task<BaseResult<ResultCarWithBrandsDto>> GetCarWithBrandByIdAsync(int id)
+        {
+            var response = await _client.GetAsync($"cars/GetCarWithBrandById/{id}");
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<ResultCarWithBrandsDto>>();
+
+            return result ?? new BaseResult<ResultCarWithBrandsDto>
             {
                 Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
             };

@@ -4,6 +4,7 @@ using OnionApp.WebUI.Services.FeatureServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class FeatureController (IFeatureService _service): Controller
     {
         public async Task<IActionResult> Index()

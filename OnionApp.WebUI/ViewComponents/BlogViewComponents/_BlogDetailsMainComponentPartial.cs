@@ -8,6 +8,12 @@ namespace OnionApp.WebUI.ViewComponents.BlogViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var result = await _service.GetByIdAsync(id);
+
+            if (result == null || result.Data == null)
+            {
+                return Content("Blog bulunamadı");
+            }
+
             return View(result.Data);
         }
     }

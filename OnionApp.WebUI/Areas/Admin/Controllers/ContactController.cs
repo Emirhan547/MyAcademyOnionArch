@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.ContactServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ContactController(IContactService _service) : Controller
     {
         public async Task<IActionResult> Index()

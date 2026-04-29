@@ -38,7 +38,7 @@ namespace OnionApp.WebUI.Services.CarFeatureServices
 
         public async Task<BaseResult<List<ResultCarFeatureByCarIdDto>>> GetCarFeaturesByCarId(int carId)
         {
-            var response = await _client.GetAsync("CarPricings"+carId);
+            var response = await _client.GetAsync($"carsFeatures/GetCarFeaturesByCarId/{carId}");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultCarFeatureByCarIdDto>>>();
 

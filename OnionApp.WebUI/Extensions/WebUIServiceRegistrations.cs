@@ -3,6 +3,7 @@ using OnionApp.WebUI.Services.AuthorServices;
 using OnionApp.WebUI.Services.BannerServices;
 using OnionApp.WebUI.Services.BlogServices;
 using OnionApp.WebUI.Services.BrandServices;
+using OnionApp.WebUI.Services.CarFeatureServices;
 using OnionApp.WebUI.Services.CarPricingServices;
 using OnionApp.WebUI.Services.CarServices;
 using OnionApp.WebUI.Services.CategoryServices;
@@ -29,6 +30,7 @@ namespace OnionApp.WebUI.Extensions
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICarPricingService, CarPricingService>();
+            services.AddScoped<ICarFeatureService, CarFeatureService>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICommentService, CommentService>();

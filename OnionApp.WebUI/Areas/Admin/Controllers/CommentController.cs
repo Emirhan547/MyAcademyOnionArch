@@ -3,6 +3,7 @@ using OnionApp.WebUI.Services.CommentServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CommentController (ICommentService _service): Controller
     {
         public async Task<IActionResult> Index(int id)

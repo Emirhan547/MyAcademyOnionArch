@@ -66,7 +66,7 @@ namespace OnionApp.WebUI.Controllers
                             new ClaimsPrincipal(claimsIdentity),
                             authProps);
 
-                        return RedirectToAction("Index", "Default");
+                        return RedirectToAction("Index", "Statistics",new {Area="Admin"});
                     }
                 }
             }

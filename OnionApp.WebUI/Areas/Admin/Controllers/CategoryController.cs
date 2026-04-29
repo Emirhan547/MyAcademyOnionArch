@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.CategoryServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController(ICategoryService _service) : Controller
     {
         public async Task<IActionResult> Index()

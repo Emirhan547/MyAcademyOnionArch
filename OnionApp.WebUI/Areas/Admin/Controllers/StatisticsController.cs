@@ -42,29 +42,26 @@ namespace OnionApp.WebUI.Areas.Admin.Controllers
                 maxPriceTask, minPriceTask
             );
 
-          
-            ViewBag.v = carCountTask.Result;
-            ViewBag.locationCount = locationCountTask.Result;
-            ViewBag.authorCount = authorCountTask.Result;
-            ViewBag.blogCount = blogCountTask.Result;
-            ViewBag.brandCount = brandCountTask.Result;
+            ViewBag.v = carCountTask.Result.Data;
+            ViewBag.locationCount = locationCountTask.Result.Data;
+            ViewBag.authorCount = authorCountTask.Result.Data;
+            ViewBag.blogCount = blogCountTask.Result.Data;
+            ViewBag.brandCount = brandCountTask.Result.Data;
 
-            ViewBag.avgRentPriceForDaily = avgDailyTask.Result;
-            ViewBag.avgRentPriceForWeekly = avgWeeklyTask.Result;
-            ViewBag.avgRentPriceForMonthly = avgMonthlyTask.Result;
+            ViewBag.avgRentPriceForDaily = avgDailyTask.Result.Data;
+            ViewBag.avgRentPriceForWeekly = avgWeeklyTask.Result.Data;
+            ViewBag.avgRentPriceForMonthly = avgMonthlyTask.Result.Data;
 
-            ViewBag.carCountByTranmissionIsAuto = autoCarTask.Result;
-            ViewBag.brandNameByMaxCar = maxBrandTask.Result;
-            ViewBag.blogTitleByMaxBlogComment = maxBlogTask.Result;
+            ViewBag.carCountByTranmissionIsAuto = autoCarTask.Result.Data;
+            ViewBag.brandNameByMaxCar = maxBrandTask.Result.Data;
+            ViewBag.blogTitleByMaxBlogComment = maxBlogTask.Result.Data;
 
-            ViewBag.carCountByKmSmallerThen1000 = kmTask.Result;
-            ViewBag.carCountByFuelGasolineOrDiesel = fuelTask.Result;
-            ViewBag.carCountByFuelElectric = electricTask.Result;
+            ViewBag.carCountByKmSmallerThen1000 = kmTask.Result.Data;
+            ViewBag.carCountByFuelGasolineOrDiesel = fuelTask.Result.Data;
+            ViewBag.carCountByFuelElectric = electricTask.Result.Data;
 
-            ViewBag.carBrandAndModelByRentPriceDailyMax = maxPriceTask.Result;
-            ViewBag.carBrandAndModelByRentPriceDailyMin = minPriceTask.Result;
-
-          
+            ViewBag.carBrandAndModelByRentPriceDailyMax = maxPriceTask.Result.Data;
+            ViewBag.carBrandAndModelByRentPriceDailyMin = minPriceTask.Result.Data;
 
             return View();
         }

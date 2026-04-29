@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.FooterAddressServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class FooterAddressController (IFooterAddressService _service): Controller
     {
         public async Task<IActionResult> Index()

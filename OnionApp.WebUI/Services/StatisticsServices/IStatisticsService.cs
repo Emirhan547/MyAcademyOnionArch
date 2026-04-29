@@ -1,22 +1,29 @@
-﻿namespace OnionApp.WebUI.Services.StatisticsServices
+﻿using OnionApp.WebUI.Base;
+
+namespace OnionApp.WebUI.Services.StatisticsServices
 {
     public interface IStatisticsService
     {
-        Task<int> GetCarCount();
-        Task<int> GetLocationCount();
-        Task<int> GetAuthorCount();
-        Task<int> GetBlogCount();
-        Task<int> GetBrandCount();
-        Task<decimal> GetAvgRentPriceForDaily();
-        Task<decimal> GetAvgRentPriceForWeekly();
-        Task<decimal> GetAvgRentPriceForMonthly();
-        Task<int> GetCarCountByTranmissionIsAuto();
-        Task<string> GetBrandNameByMaxCar();
-        Task<string> GetBlogTitleByMaxBlogComment();
-        Task<int> GetCarCountByKmSmallerThen1000();
-        Task<int> GetCarCountByFuelGasolineOrDiesel();
-        Task<int> GetCarCountByFuelElectric();
-        Task<string> GetCarBrandAndModelByRentPriceDailyMax();
-        Task<string> GetCarBrandAndModelByRentPriceDailyMin();
+        Task<BaseResult<int>> GetCarCount();
+        Task<BaseResult<int>> GetLocationCount();
+        Task<BaseResult<int>> GetAuthorCount();
+        Task<BaseResult<int>> GetBlogCount();
+        Task<BaseResult<int>> GetBrandCount();
+
+        Task<BaseResult<decimal>> GetAvgRentPriceForDaily();
+        Task<BaseResult<decimal>> GetAvgRentPriceForWeekly();
+        Task<BaseResult<decimal>> GetAvgRentPriceForMonthly();
+
+        Task<BaseResult<int>> GetCarCountByTranmissionIsAuto();
+
+        Task<BaseResult<string>> GetBrandNameByMaxCar();
+        Task<BaseResult<string>> GetBlogTitleByMaxBlogComment();
+
+        Task<BaseResult<int>> GetCarCountByKmSmallerThen1000();
+        Task<BaseResult<int>> GetCarCountByFuelGasolineOrDiesel();
+        Task<BaseResult<int>> GetCarCountByFuelElectric();
+
+        Task<BaseResult<string>> GetCarBrandAndModelByRentPriceDailyMax();
+        Task<BaseResult<string>> GetCarBrandAndModelByRentPriceDailyMin();
     }
 }

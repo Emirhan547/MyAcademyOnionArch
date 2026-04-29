@@ -25,7 +25,7 @@ namespace OnionApp.Application.Features.Handlers.FooterAddressHandlers
             var mapped = request.Adapt<FooterAddress>();
             await _repository.CreateAsync(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("FooterAddress Address Eklenemedi") : BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Success("FooterAddress Address Eklenemedi");
         }
     }
 }

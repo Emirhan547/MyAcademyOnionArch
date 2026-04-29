@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.TestimonialServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class TestimonialController (ITestimonialService _service): Controller
     {
         public async Task<IActionResult> Index()

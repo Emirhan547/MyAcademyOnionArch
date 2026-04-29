@@ -61,7 +61,7 @@ namespace OnionApp.WebUI.Services.CommentServices
 
         public async Task<BaseResult<List<ResultGetCommentWithBlogDto>>> GetCommentsByBlogId(int id)
         {
-            var response = await _client.GetAsync($"GetCommentWithBlog" + id);
+            var response = await _client.GetAsync("comments/GetCommentWithBlog" + id);
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultGetCommentWithBlogDto>>>();
 
@@ -73,7 +73,15 @@ namespace OnionApp.WebUI.Services.CommentServices
 
         public async Task<BaseResult<ResultCommentCountDto>> GetCountCommentByBlogAsync(int id)
         {
-            var response = await _client.GetAsync($"GetCommentCount/{id}");
+            var response = await _client.GetAsync($"comments/GetCommentCount/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new BaseResult<ResultCommentCountDto>
+                {
+                    Errors = new() { new Error { ErrorMessage = "API hatası" } }
+                };
+            }
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<ResultCommentCountDto>>();
 

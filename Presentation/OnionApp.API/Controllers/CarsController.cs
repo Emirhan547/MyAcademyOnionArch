@@ -50,6 +50,12 @@ namespace OnionApp.API.Controllers
             var values = await _mediator.Send(new GetCarWithBrandQuery());
             return values.IsSuccessful ? Ok(values) : BadRequest(values);
         }
+        [HttpGet("GetCarWithBrandById/{id}")]
+        public async Task<IActionResult> GetCarWithBrandById(int id)
+        {
+            var values = await _mediator.Send(new GetCarWithBrandByIdQuery(id));
+            return values.IsSuccessful ? Ok(values) : BadRequest(values);
+        }
         [HttpGet("GetLast5CarsWithBrand")]
         public async Task<IActionResult> GetLast5CarsWithBrand()
         {

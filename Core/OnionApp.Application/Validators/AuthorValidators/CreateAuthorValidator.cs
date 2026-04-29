@@ -15,7 +15,6 @@ namespace OnionApp.Application.Validators.AuthorValidators
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name Boş Bırakılamaz");
             RuleFor(x => x.ImageUrl).NotEmpty().WithMessage("ImageUrl Boş Bırakılamaz");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description Boş Bırakılamaz");
-            RuleFor(x => x.Blogs).NotEmpty().WithMessage("Blogs Boş Bırakılamaz");
         }
     }
 }

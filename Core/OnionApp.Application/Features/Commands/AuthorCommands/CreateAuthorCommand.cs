@@ -11,10 +11,9 @@ namespace OnionApp.Application.Features.Commands.AuthorCommands
 {
     public class CreateAuthorCommand:IRequest<BaseResult<object>>
     {
-        public int Id { get; set; }
+       
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
-        public List<Blog> Blogs { get; set; }
     }
 }

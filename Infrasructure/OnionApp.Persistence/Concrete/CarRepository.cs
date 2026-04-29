@@ -23,7 +23,12 @@ namespace OnionApp.Persistence.Concrete
             return values;
         }
 
-       
+        public async Task<Car> GetCarWithBrandByIdAsync(int id)
+        {
+            return await _context.Cars
+                .Include(x => x.Brand)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<List<Car>> GetLast5CarsWithBrands()
         {

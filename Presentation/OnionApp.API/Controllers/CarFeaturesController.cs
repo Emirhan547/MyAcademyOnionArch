@@ -10,7 +10,7 @@ namespace OnionApp.API.Controllers
     [ApiController]
     public class CarFeaturesController(IMediator _mediator) : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("GetCarFeaturesByCarId/{id}")]
         public async Task<IActionResult> CarFeatureListByCarId(int id)
         {
             var result = await _mediator.Send(new GetCarFeatureByCarIdQuery(id));

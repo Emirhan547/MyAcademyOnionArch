@@ -41,7 +41,7 @@ namespace OnionApp.WebUI.Services.BrandServices
 
         public async Task<BaseResult<List<ResultBrandDto>>> GetAllAsync()
         {
-            var response = await _client.GetAsync("features");
+            var response = await _client.GetAsync("brands");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultBrandDto>>>();
 

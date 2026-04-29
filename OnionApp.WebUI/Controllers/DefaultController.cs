@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using OnionApp.WebUI.Base;
 using OnionApp.WebUI.Dtos.LocationDtos;
 using System.Net.Http.Headers;
 
@@ -17,23 +18,34 @@ namespace OnionApp.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            List<SelectListItem> values2 = new();
+
             var token = User.Claims.FirstOrDefault(x => x.Type == "carbooktoken")?.Value;
+
             if (token != null)
             {
                 var client = _httpClientFactory.CreateClient();
-               // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var responseMessage = await client.GetAsync("https://localhost:7060/api/Locations");
+
+                // 🔥 Token EKLE (çok önemli)
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                var responseMessage = await client.GetAsync("https://localhost:7069/api/Locations");
 
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultLocationDto>>(jsonData);
-                List<SelectListItem> values2 = (from x in values
-                                                select new SelectListItem
-                                                {
-                                                    Text = x.Name,
-                                                    Value = x.Id.ToString()
-                                                }).ToList();
-                ViewBag.v = values2;
+
+                var result = JsonConvert.DeserializeObject<BaseResult<List<ResultLocationDto>>>(jsonData);
+
+                var values = result.Data;
+
+                values2 = values.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
             }
+
+            ViewBag.v = values2;
             return View();
         }
         [HttpPost]

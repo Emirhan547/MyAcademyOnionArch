@@ -5,6 +5,7 @@ using OnionApp.WebUI.Services.LocationServices;
 
 namespace OnionApp.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class LocationController(ILocationService _service) : Controller
     {
         public async Task<IActionResult> Index()

@@ -10,7 +10,7 @@ namespace OnionApp.Application.Tools
     {
         public const string ValidAudience = "https://localhost";
         public const string ValidIssuer = "https://localhost";
-        public const string key = "carbookcarbook01";
+        public const string key = "my_super_secret_key_1234567890abcd";
         public const int Expire = 3;
     }
 }

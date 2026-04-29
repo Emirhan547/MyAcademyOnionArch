@@ -15,7 +15,7 @@ namespace OnionApp.WebUI.Services.FeatureServices
         }
         public async Task<BaseResult<List<ResultServiceDto>>> GetAllAsync()
         {
-            var response = await _client.GetAsync("testimonials");
+            var response = await _client.GetAsync("services");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultServiceDto>>>();
 
