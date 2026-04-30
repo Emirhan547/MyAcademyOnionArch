@@ -16,7 +16,7 @@ namespace OnionApp.Application.Features.Handlers.CarPricingHandlers
     {
         public async Task<BaseResult<List<GetCarPricingWithCarQueryResult>>> Handle(GetCarPricingWithCarQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.GetCarPricingWithCar();
+            var result = await _repository.GetCarPricingWithCars();
             return BaseResult<List<GetCarPricingWithCarQueryResult>>.Success(result.Adapt<List<GetCarPricingWithCarQueryResult>>());
         }
     }

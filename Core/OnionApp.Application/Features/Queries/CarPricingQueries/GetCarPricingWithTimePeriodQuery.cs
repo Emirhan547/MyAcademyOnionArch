@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OnionApp.Application.Base;
 using OnionApp.Application.Features.Results.CarPricingResults;
 using System;
 using System.Collections.Generic;

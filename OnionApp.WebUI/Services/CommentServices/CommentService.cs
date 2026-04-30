@@ -26,7 +26,7 @@ namespace OnionApp.WebUI.Services.CommentServices
 
         public async Task<BaseResult<object>> DeleteAsync(int id)
         {
-            var response = await _client.DeleteAsync($"comments" + id);
+            var response = await _client.DeleteAsync($"comments/{id}");
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
             return result ?? new BaseResult<object>
             {
@@ -49,7 +49,7 @@ namespace OnionApp.WebUI.Services.CommentServices
 
         public async Task<BaseResult<UpdateCommentDto>> GetByIdAsync(int id)
         {
-            var response = await _client.GetAsync($"comments" + id);
+            var response = await _client.GetAsync($"comments/{id}");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<UpdateCommentDto>>();
 
@@ -61,7 +61,7 @@ namespace OnionApp.WebUI.Services.CommentServices
 
         public async Task<BaseResult<List<ResultGetCommentWithBlogDto>>> GetCommentsByBlogId(int id)
         {
-            var response = await _client.GetAsync("comments/GetCommentWithBlog" + id);
+            var response = await _client.GetAsync($"comments/GetCommentWithBlog/{id}");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultGetCommentWithBlogDto>>>();
 

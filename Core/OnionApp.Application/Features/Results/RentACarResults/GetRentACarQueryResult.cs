@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnionApp.Application.Features.Results.RentACarResults
 {
-    public class GetRentACarResult
+    public class GetRentACarQueryResult
     {
         public int CarId { get; set; }
         public string Brand { get; set; }

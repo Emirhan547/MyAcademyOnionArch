@@ -18,7 +18,7 @@ namespace OnionApp.Application.Features.Handlers.TestimonialHandlers
         public async Task<BaseResult<List<GetTestimonialsQueryResult>>> Handle(GetTestimonialsQuery request, CancellationToken cancellationToken)
         {
             var testimonials = await _repository.GetAllAsync();
-            var mapped = request.Adapt<List<GetTestimonialsQueryResult>>();
+            var mapped = testimonials.Adapt<List<GetTestimonialsQueryResult>>();
             return BaseResult<List<GetTestimonialsQueryResult>>.Success(mapped);
         }
     }

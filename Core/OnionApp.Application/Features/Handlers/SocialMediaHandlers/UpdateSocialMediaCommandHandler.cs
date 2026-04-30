@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.SocialMediaHandlers
             var mapped = request.Adapt(socials);
             _repository.Update(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("Sosyal Medya Gücncellenemedi") : BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Sosyal Medya Güncellenemedi");
         }
     }
 }

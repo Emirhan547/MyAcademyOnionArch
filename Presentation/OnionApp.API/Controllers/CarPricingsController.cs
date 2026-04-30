@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnionApp.Application.Features.Queries.CarPricingQueries;
+using OnionApp.Application.Features.Results.CarPricingResults;
 
 namespace OnionApp.API.Controllers
 {
@@ -14,6 +16,12 @@ namespace OnionApp.API.Controllers
         {
             var values = await _mediator.Send(new GetCarPricingWithCarQuery());
             return values.IsSuccessful ? Ok(values) : BadRequest(values);
+        }
+        [HttpGet("GetCarPricingWithTimePeriod")]
+        public async Task<IActionResult> GetCarPricingWithTimePeriod()
+        {
+            var values = await _mediator.Send(new GetCarPricingWithTimePeriodQuery());
+            return Ok(values);
         }
     }
 }

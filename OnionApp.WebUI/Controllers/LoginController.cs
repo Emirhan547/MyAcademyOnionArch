@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using OnionApp.WebUI.Dtos.LoginDtos;
 using OnionApp.WebUI.Dtos.RegisterDtos;
 using OnionApp.WebUI.Models;
+using OnionApp.WebUI.Services.AuthServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,15 +14,10 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace OnionApp.WebUI.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController(IAuthSessionService _authSessionService) : Controller
     {
 
-        private readonly HttpClient _client;
-
-        public LoginController(IHttpClientFactory factory)
-        {
-            _client = factory.CreateClient("ApiClient");
-        }
+       
         [HttpGet]
         public IActionResult Index()
         {
@@ -30,48 +26,14 @@ namespace OnionApp.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(CreateLoginDto create)
         {
-            var content = new StringContent(JsonSerializer.Serialize(create), Encoding.UTF8, "application/json");
-
-            var response = await _client.PostAsync("https://localhost:7069/api/Login", content);
-
-            if (response.IsSuccessStatusCode)
+            var isSuccess = await _authSessionService.SignInAsync(create, HttpContext);
+            if (!isSuccess)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-
-                var tokenModel = JsonSerializer.Deserialize<JwtResponseModel>(jsonData, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                if (tokenModel != null)
-                {
-                    JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-                    var token = handler.ReadJwtToken(tokenModel.Token);
-                    var claims = token.Claims.ToList();
-
-                    if (tokenModel.Token != null)
-                    {
-                        claims.Add(new Claim("carbooktoken", tokenModel.Token));
-
-                        var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
-
-                        var authProps = new AuthenticationProperties
-                        {
-                            ExpiresUtc = tokenModel.ExpireDate,
-                            IsPersistent = true
-                        };
-
-                        await HttpContext.SignInAsync(
-                            JwtBearerDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity),
-                            authProps);
-
-                        return RedirectToAction("Index", "Statistics",new {Area="Admin"});
-                    }
-                }
+                ModelState.AddModelError(string.Empty, "Giriş başarısız.");
+                return View(create);
             }
 
-            return View();
+            return RedirectToAction("Index", "Statistics", new { Area = "Admin" });
         }
     }
     }

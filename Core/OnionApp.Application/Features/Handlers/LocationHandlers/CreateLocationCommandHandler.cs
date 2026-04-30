@@ -25,7 +25,7 @@ namespace OnionApp.Application.Features.Handlers.LocationHandlers
             var mapped = request.Adapt<Location>();
             await _repository.CreateAsync(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Location Eklenemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Location Eklenemedi");
         }
     }
 }

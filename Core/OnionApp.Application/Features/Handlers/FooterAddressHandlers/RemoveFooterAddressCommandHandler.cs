@@ -22,7 +22,7 @@ namespace OnionApp.Application.Features.Handlers.FooterAddressHandlers
             }
             _repository.Delete(footerAddress);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Footer Address Silinemedi"):BaseResult<object>.Success(true);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Footer Address Silinemedi");
         }
     }
 }

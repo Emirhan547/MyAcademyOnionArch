@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.LocationHandlers
             var mapped = request.Adapt(locations);
             _repository.Update(mapped);
             var uow=await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Location Gücncellenemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Location Güncellenemedi");
         }
     }
 }

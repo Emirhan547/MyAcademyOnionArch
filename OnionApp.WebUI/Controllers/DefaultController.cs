@@ -3,42 +3,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using OnionApp.WebUI.Base;
 using OnionApp.WebUI.Dtos.LocationDtos;
+using OnionApp.WebUI.Services.LocationServices;
 using System.Net.Http.Headers;
 
 namespace OnionApp.WebUI.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController(ILocationService _locationService) : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public DefaultController(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
+       
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<SelectListItem> values2 = new();
 
-            var token = User.Claims.FirstOrDefault(x => x.Type == "carbooktoken")?.Value;
+            var result = await _locationService.GetAllAsync();
 
-            if (token != null)
+            if (result.IsSuccessful && result.Data != null)
             {
-                var client = _httpClientFactory.CreateClient();
-
-                // 🔥 Token EKLE (çok önemli)
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", token);
-
-                var responseMessage = await client.GetAsync("https://localhost:7069/api/Locations");
-
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var result = JsonConvert.DeserializeObject<BaseResult<List<ResultLocationDto>>>(jsonData);
-
-                var values = result.Data;
-
-                values2 = values.Select(x => new SelectListItem
+                values2 = result.Data.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()

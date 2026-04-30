@@ -21,7 +21,7 @@ namespace OnionApp.Application.Features.Handlers.PricingHandlers
             var mapped=request.Adapt<Pricing>();
             await _repository.CreateAsync(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Pricing Eklenemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Pricing Eklenemedi");
         }
     }
 }

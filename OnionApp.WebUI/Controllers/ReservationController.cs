@@ -3,18 +3,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using OnionApp.WebUI.Dtos.LocationDtos;
 using OnionApp.WebUI.Dtos.ReservationDtos;
+using OnionApp.WebUI.Services.LocationServices;
+using OnionApp.WebUI.Services.ReservationServices;
 using System.Text;
 
 namespace OnionApp.WebUI.Controllers
 {
-    public class ReservationController : Controller
+    public class ReservationController(ILocationService _locationService,IReservationService _reservationService) : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public ReservationController(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
-
+        
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
@@ -22,35 +19,33 @@ namespace OnionApp.WebUI.Controllers
             ViewBag.v2 = "Araç Rezervasyon Formu";
             ViewBag.v3 = id;
 
+            var result = await _locationService.GetAllAsync();
 
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7069/api/Locations");
+            List<SelectListItem> values2 = new();
 
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultLocationDto>>(jsonData);
-            List<SelectListItem> values2 = (from x in values
-                                            select new SelectListItem
-                                            {
-                                                Text = x.Name,
-                                                Value = x.Id.ToString()
-                                            }).ToList();
+            if (result.IsSuccessful && result.Data != null)
+            {
+                values2 = result.Data.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+            }
+
             ViewBag.v = values2;
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CreateReservationDto createReservationDto)
+        public async Task<IActionResult> Index(CreateReservationDto dto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createReservationDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7069/api/Reservations", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
-            {
+            var success = await _reservationService.CreateAsync(dto);
+
+            if (success)
                 return RedirectToAction("Index", "Default");
-            }
-            return View();
+
+            return View(dto);
         }
 
     }

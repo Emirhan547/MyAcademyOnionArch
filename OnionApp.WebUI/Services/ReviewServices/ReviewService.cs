@@ -15,7 +15,7 @@ namespace OnionApp.WebUI.Services.ReviewServices
 
         public async Task<BaseResult<List<ResultReviewByCarIdDto>>> GetReviewsByCarId(int carId)
         {
-            var response = await _client.GetAsync("reviews"+carId);
+            var response = await _client.GetAsync($"reviews/{carId}");
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultReviewByCarIdDto>>>();
 

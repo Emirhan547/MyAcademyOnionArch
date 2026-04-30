@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnionApp.WebUI.Dtos.CarDescriptionDtos;
+using OnionApp.WebUI.Dtos.CarDtos;
 using OnionApp.WebUI.Services.CarDescriptionServices;
 
 namespace OnionApp.WebUI.ViewComponents.CarDetailViewComponents
@@ -9,7 +11,7 @@ namespace OnionApp.WebUI.ViewComponents.CarDetailViewComponents
         {
             ViewBag.carid = id;
             var result = await _service.GetCarDescription(id);
-            return View(result.Data);
+            return View(result?.Data ?? new ResultCarDescriptionByCarIdDto());
         }
     }
 } 

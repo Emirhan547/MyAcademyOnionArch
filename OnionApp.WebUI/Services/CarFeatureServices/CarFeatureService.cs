@@ -38,7 +38,15 @@ namespace OnionApp.WebUI.Services.CarFeatureServices
 
         public async Task<BaseResult<List<ResultCarFeatureByCarIdDto>>> GetCarFeaturesByCarId(int carId)
         {
-            var response = await _client.GetAsync($"carsFeatures/GetCarFeaturesByCarId/{carId}");
+            var response = await _client.GetAsync($"CarFeatures/GetCarFeaturesByCarId/{carId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new BaseResult<List<ResultCarFeatureByCarIdDto>>
+                {
+                    Errors = new() { new Error { ErrorMessage = $"API isteği başarısız oldu. StatusCode: {(int)response.StatusCode}" } }
+                };
+            }
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultCarFeatureByCarIdDto>>>();
 

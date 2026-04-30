@@ -22,7 +22,7 @@ namespace OnionApp.Application.Features.Handlers.ServiceHandlers
             }
             _repository.Delete(service);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("Service silinemedi") : BaseResult<object>.Success(true);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Service silinemedi");
         }
     }
 }

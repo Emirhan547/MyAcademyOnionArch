@@ -7,8 +7,6 @@ using OnionApp.Application.Features.Queries.LocationQueries;
 
 namespace OnionApp.API.Controllers
 {
-    [Authorize(Roles = "Admin")]
-
     [Route("api/[controller]")]
     [ApiController]
     public class LocationsController(IMediator _mediator) : ControllerBase

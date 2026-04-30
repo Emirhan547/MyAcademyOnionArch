@@ -22,7 +22,7 @@ namespace OnionApp.Application.Features.Handlers.PricingHandlers
             }
             _repository.Delete(pricing);
             var uow=await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Pricing Silinemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Pricing Silinemedi");
         }
     }
 }

@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.PricingHandlers
             var mapped = request.Adapt(pricings);
             _repository.Update(mapped);
             var uow=await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("Pricing Güncellenemedi") : BaseResult<object>.Success(true);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Pricing Güncellenemedi");
         }
     }
 }

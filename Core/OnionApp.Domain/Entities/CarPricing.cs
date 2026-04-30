@@ -11,17 +11,10 @@ namespace OnionApp.Domain.Entities
     {
         public int Id { get; set; }
         public int CarId { get; set; }
-        public virtual Car Car { get; set; }
+        public Car Car { get; set; }
         public int PricingId { get; set; }
         public Pricing Pricing { get; set; }
         public decimal Amount { get; set; }
-        [NotMapped]
-        public decimal DailyAmount { get; set; }
 
-        [NotMapped]
-        public decimal WeeklyAmount { get; set; }
-
-        [NotMapped]
-        public decimal MonthlyAmount { get; set; }
     }
 }

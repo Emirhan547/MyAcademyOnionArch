@@ -1,6 +1,7 @@
 ﻿using OnionApp.WebUI.Base;
 using OnionApp.WebUI.Dtos.CarDescriptionDtos;
 using OnionApp.WebUI.Dtos.FeatureDtos;
+using System.Text.Json;
 
 namespace OnionApp.WebUI.Services.CarDescriptionServices
 {
@@ -12,11 +13,29 @@ namespace OnionApp.WebUI.Services.CarDescriptionServices
         {
             _client = factory.CreateClient("ApiClient");
         }
-        public async Task <BaseResult<ResultCarDescriptionByCarIdDto>> GetCarDescription(int carId)
+        public async Task<BaseResult<ResultCarDescriptionByCarIdDto>> GetCarDescription(int carId)
         {
-            var response = await _client.GetAsync("CarDescriptions");
+            var response = await _client.GetAsync($"CarDescriptions/{carId}");
 
-            var result = await response.Content.ReadFromJsonAsync<BaseResult<ResultCarDescriptionByCarIdDto>>();
+            if (!response.IsSuccessStatusCode)
+            {
+                return new BaseResult<ResultCarDescriptionByCarIdDto>
+                {
+                    Errors = new() { new Error { ErrorMessage = "API hatası" } }
+                };
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return new BaseResult<ResultCarDescriptionByCarIdDto>
+                {
+                    Errors = new() { new Error { ErrorMessage = "Boş response geldi" } }
+                };
+            }
+
+            var result = JsonSerializer.Deserialize<BaseResult<ResultCarDescriptionByCarIdDto>>(content);
 
             return result ?? new BaseResult<ResultCarDescriptionByCarIdDto>
             {

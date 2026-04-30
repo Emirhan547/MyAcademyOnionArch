@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.FooterAddressHandlers
             var mapped = request.Adapt(footerAddress);
             _repository.Update(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("FooterAddress Güncellenemedi") : BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("FooterAddress Güncellenemedi");
         }
     }
 }

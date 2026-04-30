@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnionApp.WebUI.Dtos.CarDtos;
 using OnionApp.WebUI.Services.CarServices;
 
 namespace OnionApp.WebUI.ViewComponents.CarDetailViewComponents
@@ -8,7 +9,8 @@ namespace OnionApp.WebUI.ViewComponents.CarDetailViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var result = await _service.GetCarWithBrandByIdAsync(id);
-            return View(result.Data);
+
+            return View(result?.Data ?? new ResultCarWithBrandsDto());
         }
     }
 }

@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.TestimonialHandlers
             testimonial = request.Adapt(testimonial);
             _repository.Update(testimonial);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow !? BaseResult<object>.Fail("Testimonial Eklenemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Testimonial Güncellenemedi");
         }
     }
 }

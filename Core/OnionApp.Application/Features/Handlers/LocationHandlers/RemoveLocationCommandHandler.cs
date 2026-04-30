@@ -23,7 +23,7 @@ namespace OnionApp.Application.Features.Handlers.LocationHandlers
             }
             _repository.Delete(locations);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("Location Silinemedi") : BaseResult<object>.Success(uow);  
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Location Silinemedi");
         }
     }
 }

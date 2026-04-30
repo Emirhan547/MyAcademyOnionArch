@@ -1,4 +1,5 @@
-﻿using OnionApp.Domain.Entities;
+﻿using OnionApp.Application.ViewModels;
+using OnionApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace OnionApp.Application.Contracts
 {
     public interface ICarPricingRepository
     {
-        Task<List<CarPricing>> GetCarPricingWithCar();
+        Task<List<CarPricing>> GetCarPricingWithCars();
         List<CarPricing> GetCarPricingWithTimePeriod();
+        List<CarPricingViewModel> GetCarPricingWithTimePeriod1();
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnionApp.Application.Base;
 using OnionApp.Application.Features.Commands.CategoryCommands;

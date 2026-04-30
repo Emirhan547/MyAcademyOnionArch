@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.FeatureHandlers
            var mapped= request.Adapt(features);
             _repository.Update(mapped);
             var uow=await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Feature Güncellenemedi"):BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Feature Güncellenemedi");
 
         }
     }

@@ -24,24 +24,44 @@ namespace OnionApp.WebUI.Services.ContactServices
             };
         }
 
-        public Task<BaseResult<object>> DeleteAsync(int id)
+        public async Task<BaseResult<object>> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _client.DeleteAsync($"contacts/{id}");
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
         }
 
-        public Task<BaseResult<List<ResultContactDto>>> GetAllAsync()
+        public async Task<BaseResult<List<ResultContactDto>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync("contacts");
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultContactDto>>>();
+            return result ?? new BaseResult<List<ResultContactDto>>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
         }
 
-        public Task<BaseResult<UpdateContactDto>> GetByIdAsync(int id)
+        public async Task<BaseResult<UpdateContactDto>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"contacts/{id}");
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<UpdateContactDto>>();
+            return result ?? new BaseResult<UpdateContactDto>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
         }
 
-        public Task<BaseResult<object>> UpdateAsync(UpdateContactDto update)
+        public async Task<BaseResult<object>> UpdateAsync(UpdateContactDto update)
         {
-            throw new NotImplementedException();
+            var response = await _client.PutAsJsonAsync("contacts", update);
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+            return result ?? new BaseResult<object>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
         }
     }
 }

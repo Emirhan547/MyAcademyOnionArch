@@ -30,7 +30,7 @@ namespace OnionApp.Application.Features.Handlers.ServiceHandlers
            var mapped= request.Adapt(services);
             _repository.Update(mapped);
             var uow=await _unitOfWork.SaveChangesAsync();
-            return uow?BaseResult<object>.Fail("Services Güncellenemedi"):BaseResult<object>.Success(true);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Services Güncellenemedi");
         }
     }
 }

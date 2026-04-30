@@ -107,5 +107,6 @@ namespace OnionApp.WebUI.Services.CarServices
                 Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
             };
         }
+
     }
 }

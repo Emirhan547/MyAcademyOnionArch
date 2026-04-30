@@ -23,5 +23,15 @@ namespace OnionApp.WebUI.Services.CarPricingServices
                 Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
             };
         }
+
+        public async Task<BaseResult<List<ResultCarPricingListWithModelDto>>> GetCarPricingWithTimePeriod()
+        {
+            var response = await _client.GetAsync("carpricings/GetCarPricingWithTimePeriod");
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<List<ResultCarPricingListWithModelDto>>>();
+            return result ?? new BaseResult<List<ResultCarPricingListWithModelDto>>
+            {
+                Errors = new() { new Error { ErrorMessage = "Deserialize hatası" } }
+            };
+        }
     }
 }

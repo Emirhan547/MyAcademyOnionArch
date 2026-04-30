@@ -25,7 +25,7 @@ namespace OnionApp.Application.Features.Handlers.SocialMediaHandlers
             var mapped = request.Adapt<SocialMedia>();
             await _repository.CreateAsync(mapped);
             var uow = await _unitOfWork.SaveChangesAsync();
-            return uow ? BaseResult<object>.Fail("Sosyal Medya  Eklenemedi") : BaseResult<object>.Success(uow);
+            return uow ? BaseResult<object>.Success(uow) : BaseResult<object>.Fail("Sosyal Medya Eklenemedi");
         }
     }
 }
